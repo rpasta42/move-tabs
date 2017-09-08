@@ -40,8 +40,10 @@ pag.FAILSAFE = False
 (src_x, src_y) = (2310, 471)
 (dst_x, dst_y) = (1435, 600)
 
-def s():
-   sleep(0.3)
+def sleep_half_sec():
+   #sleep(0.5)
+   #sleep(0.3)
+   sleep(0.2)
 
 def init():
    global src_x
@@ -52,12 +54,6 @@ def init():
    #pag.displayMousePosition()
    #pag.hotkey('
    #pag.click()
-
-   close_after = input('close after moving? (y/n)')
-   if close_after == 'y':
-      close_after = True
-   else:
-      close_after = False
 
    num_tabs = int(input('number of tabs to move: '))
    print('move mouse to source browser and then press z')
@@ -82,40 +78,29 @@ def init():
 
    i = 0
    while i < num_tabs:
-      s()
+      sleep_half_sec()
       move_to_src_browser()
-      s()
-      copy_url()
+      sleep_half_sec()
+      start_drag_tab()
 
-      s()
+      sleep_half_sec()
 
-      if not close_after:
-         next_tab()
-      else:
-         close_tab()
-      #close_tab()
-      s()
-
-
-      move_to_dst_browser()
-      sleep(0.3)
-      new_tab()
-      s()
-      paste_tab_url()
+      move_to_dst_browser_let_go()
 
       i += 1
+
+
+def start_drag_tab():
+   pag.mouseDown()
 
 def move_to_src_browser():
    #browser chrome 2310, 471
    pag.moveTo(src_x, src_y)
 
-
-def close_tab():
-   pag.hotkey('ctrl', 'w')
-
-def move_to_dst_browser():
+def move_to_dst_browser_let_go():
    #browser firefox 1435, 600
    pag.moveTo(dst_x, dst_y)
+   pag.mouseUp()
 
 
 
